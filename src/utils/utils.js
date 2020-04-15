@@ -25,7 +25,7 @@ export const getMessageFromURL = _ => {
 export const copyLink = link => {
     try {
         const elm = document.getElementById('link')
-        elm.value = `${window.location.origin}/?${link}`
+        elm.value = `${window.location.origin}/messenger/?${link}`
         elm.select()
         const result = document.execCommand('copy')
 
