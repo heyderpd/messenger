@@ -6,7 +6,7 @@ export const decrypt = msg => atob(msg)
 
 export const setMessageOnURL = msg => {
     const message = crypt(msg)
-    window.history.pushState('', '', `/?${message}`)
+    window.history.pushState('', '', `/messenger/?${message}`)
 }
 
 export const getMessageFromURL = _ => {

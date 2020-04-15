@@ -97,7 +97,7 @@ class App extends Component {
             <input id="link"></input>,
           ]}
         <span id="version">
-          version 0.1.2
+          version 0.1.3
         </span>
       </div>
     )
