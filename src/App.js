@@ -11,10 +11,15 @@ class App extends Component {
       link: '',
     }
     this.createMessageLink = this.createMessageLink.bind(this)
+    this.updateMessage = this.updateMessage.bind(this)
   }
 
   componentDidMount() {
     tryTalk()
+  }
+
+  updateMessage(event) {
+    this.setState({ message: event.target.value })
   }
 
   createMessageLink() {
@@ -38,7 +43,7 @@ class App extends Component {
           The content of the message is the responsibility of the person who sent it.
           And not from this site. When you create a message use with responsibility.
         </span>
-        <textarea value={this.state.message} />
+        <textarea value={this.state.message} onChange={this.updateMessage} />
         <button onClick={this.createMessageLink}>
           generate message
         </button>
