@@ -1,6 +1,2 @@
-import { crypt as c } from './utils'
-import t from './talk'
-
-export const crypt = c
-
-export const tryTalk = t
+export { crypt, whyGod, setMessageOnURL, getMessageFromURL, copyLink } from './utils'
+export { getMessage, tryTalk } from './talk'

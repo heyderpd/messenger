@@ -1,34 +1,42 @@
-import { time, decrypt } from './utils'
+import { time, getMessageFromURL } from './utils'
+
+const config = {
+    voice: null,
+    synth: null,
+}
 
 const getSynth = _ => window.speechSynthesis
 
-const getPTBR = synth => synth.getVoices().filter(v => v.lang === 'pt-BR').pop()
+const getPTBR = _ => config.synth.getVoices().filter(v => v.lang === 'pt-BR').pop()
 
-const getMessage = _ => {
-    const message = decrypt(window.location.search.replace('?',''))
-    const hasMessage = message && message.length > 0
-    if (!hasMessage) {
+const getSpeech = _ => {
+    const msg = getMessageFromURL()
+    if (msg === '') {
         throw Error("don't has message")
     }
-    return new SpeechSynthesisUtterance(message)
+    return new SpeechSynthesisUtterance(msg)
 }
 
-const setVoice = (message, voice) => message.voice = voice
+const setVoice = message => message.voice = config.voice
 
-const speak = (synth, message) => synth.speak(message)
+const speak = msg => config.synth.speak(msg)
 
-const tryTalk = async _ => {
+export const tryTalk = async (onlyMount = false) => {
     try {
-        await time(500)
-        const message = getMessage()
-        const synth = getSynth()
-        await time(5)
-        const voice = getPTBR(synth)
-        setVoice(message, voice)
-        speak(synth, message)
+        if (config.synth == null) {
+            config.synth = getSynth()
+            await time(50)
+            config.voice = getPTBR()
+            if (onlyMount) {
+                console.info('ready')
+                return
+            }
+        }
+        const message = getSpeech()
+        setVoice(message)
+        speak(message)
+        console.info('talking')
     } catch (err) {
         console.error(err)
     }
 }
-
-export default tryTalk
